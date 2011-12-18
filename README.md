@@ -1,13 +1,26 @@
 RIA天地行成都城市精英论坛-持续集成在Flex/AS3开发中的应用
 ====================================================
 
-AntExample
+FlexAntExample
 ----------------
+简单地演示了怎么编写Ant脚本来构建Flex应用程序，包括<mxmlc>、<asdoc>、<html-wrapper>等任务的使用
 
 
-AntIvyExample
+FlexAntFlexUnit
 ----------------
+演示了怎样编写Ant脚本来运行单元测试，主要是<flexunit>、<junitreport>任务的使用。
 
+FlexAntIvyExample
+-------------------
+演示了Ant与Ivy配合来解决依赖的问题，获取Cairngorm3相关组件示例
+
+FlexCustomLibs
+--------------------------
+演示如何将库发布到自建的nexus仓库
+
+FlexAntIvyResolveExample
+--------------------------
+从nexus仓库（私服）中获取相应的依赖库
 
 
 Usage
