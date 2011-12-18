@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<componentPackage>
+    <component id="StatusIcon" class="com.jchen.view.components.StatusIcon"/>
+</componentPackage>

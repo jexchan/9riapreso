@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="flex-macros" basedir="..">
+
+	<macrodef name="flex-unit" description="Generate Flex Unit Macro">
+		<attribute name="test.mxml.file" />
+		<attribute name="options" />
+		<sequential>
+			<java jar="${env.FLEX_HOME}/lib/mxmlc.jar" dir="." fork="true" failonerror="true">
+				<jvmarg value="-Xmx512m"/>
+				<jvmarg value="-Djava.awt.headless=true"/>
+				<arg value="+flexlib=${env.FLEX_HOME}/frameworks"/>
+				<arg line="@{options}"/>
+				<arg value="-source-path+=${src.loc},@{test.loc}"/>
+				<arg value="-file-specs=@{test.loc}/@{test.mxml.file}.mxml"/>
+				<arg value="-output=${bin.loc}/@{test.mxml.file}.swf"/>
+			</java>
+		</sequential>
+	</macrodef>
+
+</project>

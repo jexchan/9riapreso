@@ -1,0 +1,11 @@
+<ivysettings>
+ <settings defaultResolver="main-chain"/>
+  <property name="artifactory" value="http://opensource.adobe.com/svn/opensource/cairngorm3/maven-repository"/>
+  <resolvers>
+    <chain name="main-chain">
+      <url name="adobe-cairngorm3-public" m2compatible="true">
+        <artifact pattern="${artifactory}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+      </url>
+    </chain>
+  </resolvers>
+</ivysettings>

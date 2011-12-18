@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="chapter13" basedir="." default="package">
+	<property environment="env" />
+	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+	<!-- 给当前已存在的目录添加定义，方便后面引用 -->
+	<property name="src.loc" location="${basedir}/src" />
+	<property name="lib.loc" location="${basedir}/libs" />
+
+	<!-- 定义需要生成的目录 -->
+	<property name="build.loc" location="${basedir}/dist" />
+	
+	<!-- 初始化，创建输出目录 -->
+	<target name="init" depends="clean">
+		<mkdir dir="${build.loc}" />
+	</target>
+	
+	<!-- 删除输出目录 -->
+	<target name="clean">
+		<delete dir="${build.loc}" />
+	</target>
+
+	<!-- 编译主程序 -->
+	<target name="compile" depends="init">
+		<mxmlc file="${src.loc}/FlexAntFirstStep.mxml" 
+			output="${build.loc}/FlexAntFirstStep.swf" />
+	</target>
+	
+	<!-- 使用HTML页面来包装生成的主程序 -->
+	<target name="package" depends="compile">
+		<html-wrapper swf="FlexAntFirstStep" output="${build.loc}" height="100%" width="100%" />
+	</target>
+</project>

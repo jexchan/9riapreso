@@ -1,0 +1,22 @@
+<ivysettings>
+ <settings defaultResolver="main-chain"/>
+  <property name="nexus_server" value="localhost" override="false"/>
+  <!-- 设定Nexus仓库地址 -->
+  <property name="artifactory" value="http://${nexus_server}:8080/nexus/content/repositories"/>
+  <!-- 设定Nexus仓库的访问帐户 -->
+  <credentials host="${nexus_server}" realm="Sonatype Nexus Repository Manager" username="admin" passwd="admin123"/>
+
+  <resolvers>
+    <chain name="main-chain">
+      <!-- 将构件发布到Nexus内置的Release仓库 -->
+      <url name="release-repo" m2compatible="true">
+        <ivy pattern="${artifactory}/releases/[organisation]/[module]/[revision]/ivy-[revision].xml"/>
+        <artifact pattern="${artifactory}/releases/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+      </url>
+      <filesystem name="local-filesystem-repo" checkmodified="true">
+        <artifact pattern="${ivy.default.ivy.user.dir}/snapshots/[organisation]/[module]/swcs/[artifact]-[revision].[ext]"/>
+        <ivy pattern="${ivy.default.ivy.user.dir}/snapshots/[organisation]/[module]/ivy-[revision].xml"/>
+      </filesystem>
+    </chain>
+  </resolvers>
+</ivysettings>

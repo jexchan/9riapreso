@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="FlexCustomLibs" 
+		xmlns:ivy="antlib:org.apache.ivy.ant"
+		basedir=".">
+		<property name="lib.dir" value="libs" />
+		<target name="clean">
+			<delete dir="${lib.dir}" />
+		</target>
+		<target name="init" depends="clean">
+			<mkdir dir="${lib.dir}" />
+		</target>
+		<target name="resolve" depends="init" description="--> 利用Ivy向本地复制被解析的文件">
+	        <ivy:retrieve pattern="libs/[artifact]-[revision].[ext]"/>
+	    </target>
+</project>

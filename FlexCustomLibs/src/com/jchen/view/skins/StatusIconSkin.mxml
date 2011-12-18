@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+	<!-- 指定皮肤所属的组件 -->
+	<fx:Metadata>
+		[HostComponent("com.jchen.view.components.StatusIcon")]
+	</fx:Metadata>
+	
+	<s:states>
+		<s:State name="online"/>
+		<s:State name="busy" />
+		<s:State name="away" />
+		<s:State name="offline" />
+	</s:states>
+	
+	<s:Group>
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="bottom" paddingRight="10" paddingLeft="10"/>
+		</s:layout>
+		<mx:Image id="icon" source="@Embed('assets/status_online.png')"
+				  source.busy="@Embed('assets/status_busy.png')" 
+				  source.away="@Embed('assets/status_away.png')"
+				  source.offline="@Embed('assets/status_offline.png')"/>
+		<s:Label text="{hostComponent.nickName}" />
+	</s:Group>
+</s:Skin>

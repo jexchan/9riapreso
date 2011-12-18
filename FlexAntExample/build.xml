@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="chapter13" basedir="." default="build-doc">
+	<property environment="env" />
+	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
+	<!-- 加入构建Flex应用程序需要的Ant扩展包flexTasks.jar -->
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+	<!-- 给当前已存在的目录添加定义，方便后面引用 -->
+	<property name="src.loc" location="${basedir}/src" />
+	<property name="lib.loc" location="${basedir}/libs" />
+
+	<!-- 定义需要生成的目录 -->
+	<property name="build.doc" location="${basedir}/doc" />
+	
+	<!-- 初始化，创建输出目录 -->
+	<target name="init" depends="clean">
+		<mkdir dir="${build.doc}" />
+	</target>
+	
+	<!-- 删除输出目录 -->
+	<target name="clean">
+		<delete dir="${build.doc}" />
+	</target>
+	
+	<!-- 生成ASDoc文档 -->
+	<target name="build-doc" depends="init">
+        <asdoc output="${build.doc}" lenient="true" failonerror="true"
+        	main-title="Created with Ant"
+        	footer="Copyright 2011 jchen">
+            <doc-sources path-element="${src.loc}/com/jchen/events"/> 
+        </asdoc>
+    </target>
+</project>

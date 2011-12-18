@@ -1,0 +1,17 @@
+<ivysettings>
+ <settings defaultResolver="main-chain"/>
+  <property name="nexus_server" value="localhost" override="false"/>
+  <property name="artifactory" value="http://${nexus_server}:8080/nexus/content/repositories"/>
+  <property name="ibiblio-maven2-root" value="http://repo1.maven.org/maven2/" override="false" />
+  <credentials host="${nexus_server}" realm="Sonatype Nexus Repository Manager" username="admin" passwd="admin123"/>
+  
+ <resolvers>
+    <chain name="main-chain">
+      <!-- 将构件发布到Nexus内置的Release仓库 -->
+      <url name="release-repo" m2compatible="true">
+        <ivy pattern="${artifactory}/releases/[organisation]/[module]/[revision]/ivy-[revision].xml"/>
+        <artifact pattern="${artifactory}/releases/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+      </url>
+    </chain>
+  </resolvers>
+</ivysettings>

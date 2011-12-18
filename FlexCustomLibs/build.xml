@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FlexCustomLibs" 	xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="build-swc">
+	<property environment="env" />
+	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
+	<property name="FLEX.SDK.FRAMEWORKS" location="${env.FLEX_HOME}/frameworks" />
+	<property name="project.name" value="${ant.project.name}" />
+	<property name="module" value="${project.name}" />
+	<property name="ivy.deliver.revision" value="1.2.0" />
+	<property name="project.swc" value="${project.name}-${ivy.deliver.revision}.swc" />
+	<property name="ivy.settings.file" location="ivysettings.xml"/>
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+	<!-- 给当前已存在的目录添加定义，方便后面引用 -->
+	<property name="src.loc" location="${basedir}/src" />
+	<property name="lib.loc" location="${basedir}/libs" />
+
+	<!-- 定义需要生成的目录 -->
+	<property name="build.libs.loc" location="${basedir}/dist/swcs" />
+	
+	<target name="init" depends="clean" description="--> 初始化，创建输出目录">
+		<mkdir dir="${build.libs.loc}" />
+	</target>
+	
+	<target name="clean" description="--> 删除输出目录">
+		<delete dir="${build.libs.loc}" />
+	</target>
+	
+	<target name="build-swc" depends="init" description="--> 调用compc编译生成SWC">
+        <compc output="${build.libs.loc}/${project.swc}">
+        	<!-- 设置源文件路径 -->
+            <source-path path-element="${src.loc}"/>
+        	<!-- 以通配符方式指定哪些类型文件是需要被编译的 -->
+        	<include-sources dir="${src.loc}/com/jchen/view/"
+        	                    includes="**/*.as **/*.mxml" />
+        	<!-- 如果该项目引用其它库，需要在这里指定 -->
+            <compiler.library-path dir="${lib.loc}" append="true">
+                <include name="*.swc"/>
+            </compiler.library-path>
+        	<!-- 手动添加涉及到的一些官方标准命名空间 -->
+        	<namespace uri="http://ns.adobe.com/mxml/2009"
+                manifest="${FLEX.SDK.FRAMEWORKS}/mxml-2009-manifest.xml" />
+            <namespace uri="library://ns.adobe.com/flex/spark"
+                manifest="${FLEX.SDK.FRAMEWORKS}/spark-manifest.xml" />
+            <namespace uri="library://ns.adobe.com/flex/mx"
+                manifest="${FLEX.SDK.FRAMEWORKS}/mx-manifest.xml" />
+            <namespace uri="http://www.adobe.com/2006/mxml"
+                manifest="${FLEX.SDK.FRAMEWORKS}/mxml-manifest.xml" />
+        	<!-- 手动添加当前SWC自定义命名空间，并指定对定的manifest.xml文件 -->
+        	<namespace uri="http://www.jexchen.com/2010/flexlib" 
+        		manifest="manifest.xml" />
+    	   	<include-namespaces>http://www.jexchen.com/2010/flexlib</include-namespaces>
+        	<!-- 手动添加需要用到的外部库 -->
+        	<compiler.external-library-path dir="${FLEX.SDK.FRAMEWORKS}" append="true">
+				<include name="libs/player/playerglobal.swc"/>
+				<include name="libs/framework.swc" />
+				<include name="libs/flex.swc" />
+				<include name="libs/spark.swc" />
+				<include name="libs/sparkskins.swc" />
+				<include name="libs/mx/mx.swc" />
+			</compiler.external-library-path>
+        </compc>
+    </target>
+
+	<target name="pub-release" depends="build-swc" description="--> 发布构件至Nexus内置的Release仓库">
+		<ivy:resolve />
+		<ivy:publish resolver="release-repo" conf="*" status="release" overwrite="true">
+		  <artifacts pattern="${build.libs.loc}/[artifact]-[revision].[ext]"/>
+		</ivy:publish>
+	</target>
+</project>

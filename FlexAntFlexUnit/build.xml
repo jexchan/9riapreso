@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="chapter13_flexunit_ant" basedir="." default="report">
+	<property environment="env" />
+	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
+
+	<!-- 给当前已存在的目录添加定义，方便后面引用 -->
+	<property name="src.loc" location="${basedir}/src" />
+	<property name="test.loc" location="${basedir}/test" />
+	<property name="lib.loc" location="${basedir}/libs" />
+
+	<!-- 定义需要生成的目录 -->
+	<property name="dist.loc" location="${basedir}/target" />
+	<property name="report.loc" location="${dist.loc}/report" />
+	
+	<!-- 加入构建Flex应用程序需要的Ant扩展包flexTasks.jar -->
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	
+	<!-- 加入运行单元测试需要的Ant扩展包flexUnitTasks.jar -->
+	<taskdef resource="flexUnitTasks.tasks" >
+	   <classpath>
+	      <fileset dir="${lib.loc}">
+	         <include name="flexUnitTasks*.jar" />
+	      </fileset>
+	   </classpath>
+	</taskdef>
+	
+	<!-- 初始化，创建输出目录 -->
+	<target name="init" depends="clean">
+		<mkdir dir="${dist.loc}" />
+		<mkdir dir="${report.loc}" />
+	</target>
+	
+	<!-- 删除输出目录 -->
+	<target name="clean">
+		<delete dir="${dist.loc}" />
+		<delete dir="${report.loc}" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<!-- 编译测试运行主程序TestRunner.mxml -->
+		<mxmlc file="${test.loc}/TestRunner.mxml" output="${dist.loc}/TestRunner.swf">
+			<compiler.source-path path-element="${src.loc}"/>
+			<library-path dir="${lib.loc}" append="true">
+				<include name="*.swc" />
+			</library-path>
+		</mxmlc>
+	</target>
+	
+	<!-- 以XML形式输出测试运行报告 -->
+	<target name="test" depends="compile">
+		<flexunit swf="${dist.loc}/TestRunner.swf" toDir="${report.loc}" haltonfailure="false" />
+	</target>
+	
+	<!-- 根据test阶段生成的XML文件来生成测试运行报告的HTML页面 -->
+	<target name="report" depends="test">
+		<junitreport todir="${report.loc}">
+			<fileset dir="${report.loc}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${report.loc}/html" />
+		</junitreport>
+	</target>
+</project>

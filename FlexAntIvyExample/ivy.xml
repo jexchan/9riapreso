@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+	 <info organisation="com.adobe.cairngorm" module="FlexCustomLibs"/>
+	<dependencies>
+  		<dependency org="com.adobe.cairngorm" name="navigation" rev="1.4">
+  			<artifact name="navigation" type="swc"/>
+  		</dependency>
+  	</dependencies>
+</ivy-module>

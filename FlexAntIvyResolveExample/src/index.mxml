@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:jchen="http://www.jexchen.com/2010/flexlib">
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.jchen.view.skins.StatusIconSkin;
+		]]>
+	</fx:Script>
+	<jchen:StatusIcon status="busy" nickName="Jex Chan" skinClass="com.jchen.view.skins.StatusIconSkin"/>
+</s:Application>

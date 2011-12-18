@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="fakelib" 
+		xmlns:ivy="antlib:org.apache.ivy.ant"
+		basedir=".">
+		<property name="lib.dir" value="libs" />
+		<target name="init">
+			<mkdir dir="${lib.dir}" />
+		</target>
+		<target name="clean">
+			<delete dir="${lib.dir}" />
+		</target>
+		<target name="resolve" depends="init" description="--> retrieve dependencies with ivy">
+	        <ivy:retrieve pattern="libs/[artifact]-[revision].[ext]"/>
+	    </target>
+</project>

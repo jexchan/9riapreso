@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+	<info organisation="swctesting" module="whatever"/>
+	<dependencies>
+  		<dependency org="com.jchen" name="FlexCustomLibs" rev="1.2.0" conf="*" transitive="false" changing="false">
+  		</dependency>
+  	</dependencies>
+</ivy-module>
